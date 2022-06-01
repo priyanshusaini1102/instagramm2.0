@@ -17,7 +17,7 @@ const Home: NextPage = () => {
 
       {/* Modal */}
 
-      <p className='text-2xs text-purple-600'>This is Instagramm2.0💥</p>
+      <p className='text-2xs text-center p-4 text-lg '>This is Instagramm2.0</p>
     </div>
   )
 }
