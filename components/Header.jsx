@@ -4,7 +4,9 @@ import {
   SearchIcon,
   PlusIcon,
   HeartIcon,
-  UserIcon
+  UserIcon,
+  PaperAirplaneIcon,
+  MenuIcon
 } from '@heroicons/react/outline';
 
 import { HomeIcon } from '@heroicons/react/solid';
@@ -23,38 +25,38 @@ const Header = () => {
         </div>
 
       {/* Middle */}
-        <div className="md:flex justify-center hidden px-2 border-2 h-10 my-auto bg-gray-200 shadow-inner rounded-lg ">
-          <div className="relative my-auto border-2">
+        <div className="md:flex relative justify-center hidden h-10 my-auto ">
+          <div className="absolute my-2 left-2 border-1 border-black ">
             <SearchIcon className="h-6 w-6 opacity-30" />
           </div>
-            <input type="text" placeholder="Search" className="h-full bg-gray-200 focus:outline-none" />
-
+            <input type="text" placeholder="Search" className="h-full border-2 pl-9 focus:border-black bg-gray-200 shadow-inner rounded-lg"/>
         </div>
 
       {/* Right */}
-      <div className="flex justify-center">
-
-        <div className="relative my-auto mx-3 h-6 w-6">
-          <HomeIcon  />
+        <div className="flex items-center justify-between  w-64">
+          <div className="md:hidden flex-end relative h-6 w-6  ">
+            <MenuIcon />
+          </div>
+          <div className="relative h-6 w-6 navBtn">
+            <HomeIcon />
+          </div>
+          <div className="relative h-6 w-6 -inset-y-0.5 navBtn">
+            <PaperAirplaneIcon className="rotate-45 " />
+            <div className="absolute -top-1 text-xs -right-0.5 text-white bg-red-500 w-4 h-4 text-center rounded-full">3</div>
+          </div>
+          <div className="relative h-6 w-6 navBtn">
+            <PlusIcon  />
+          </div>
+          <div className="relative h-6 w-6 navBtn">
+            <Image layout="fill" src="/compass.png" />
+          </div>
+          <div className="relative h-6 w-6 navBtn">
+            <HeartIcon  />
+          </div>
+          <div className="relative h-6 w-6 navBtn">
+            <UserIcon  />
+          </div>
         </div>
-        <div className="relative my-auto mx-3 h-5 w-5 text-black contrast-200">
-          <Image layout="fill" src="/direct-instagram.png" />
-        </div>
-        <div className="relative my-auto mx-3 h-6 w-6">
-          <PlusIcon  />
-        </div>
-        <div className="relative my-auto mx-3 h-6 w-6">
-          <Image layout="fill" src="/compass.png" />
-        </div>
-        <div className="relative my-auto mx-3 h-6 w-6">
-          <HeartIcon  />
-        </div>
-        <div className="relative my-auto mx-3 h-6 w-6">
-          <UserIcon  />
-        </div>
-      </div>
-      
-      
       </div>
     </div>
   )
