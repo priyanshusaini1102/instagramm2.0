@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Header from '../components/Header';
+import BottomBar from '../components/BottomBar';
 
 const Home: NextPage = () => {
   return (
@@ -16,6 +17,9 @@ const Home: NextPage = () => {
       {/* Feed */}
 
       {/* Modal */}
+
+      {/* Bottom Bar */}
+      <BottomBar />
 
       <p className='text-2xs text-center p-4 text-lg '>This is Instagramm2.0</p>
     </div>

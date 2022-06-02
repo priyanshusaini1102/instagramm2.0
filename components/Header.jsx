@@ -11,18 +11,20 @@ import {
 
 import { HomeIcon } from '@heroicons/react/solid';
 
+
 const Header = () => {
   return (
     <div className="border-b-2 w-screen shadow-sm py-3">
       <div className="flex px-6 justify-between max-w-6xl mx-auto">
       {/* Left */}
-
+      <div>
         <div className="relative hidden lg:inline-grid w-28 h-10  cursor-pointer ">
           <Image layout="fill" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2880px-Instagram_logo.svg.png" />
         </div>
         <div className="relative lg:hidden w-10 h-10 cursor-pointer">
           <Image layout="fill" src="https://links.papareact.com/jjm" />
         </div>
+      </div>
 
       {/* Middle */}
         <div className="md:flex relative justify-center hidden h-10 my-auto ">
@@ -33,8 +35,8 @@ const Header = () => {
         </div>
 
       {/* Right */}
-        <div className="flex items-center justify-between  w-64">
-          <div className="md:hidden flex-end relative h-6 w-6  ">
+        <div className="flex items-center justify-between md:w-64">
+          <div className="md:hidden relative h-6 w-6">
             <MenuIcon />
           </div>
           <div className="relative h-6 w-6 navBtn">
@@ -57,6 +59,8 @@ const Header = () => {
             <UserIcon  />
           </div>
         </div>
+
+      
       </div>
     </div>
   )
