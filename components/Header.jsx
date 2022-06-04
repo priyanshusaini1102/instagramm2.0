@@ -27,7 +27,7 @@ const Header = () => {
       </div>
 
       {/* Middle */}
-        <div className="md:flex relative justify-center hidden h-10 my-auto ">
+        <div className="md:flex relative justify-center h-10 my-auto ">
           <div className="absolute my-2 left-2 border-1 border-black ">
             <SearchIcon className="h-6 w-6 opacity-30" />
           </div>
