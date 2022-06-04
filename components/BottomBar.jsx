@@ -13,7 +13,7 @@ import { HomeIcon } from '@heroicons/react/solid';
 
 const BottomBar = () => {
   return (
-    <div className="md:hidden flex items-center  justify-evenly w-screen absolute bottom-0 border-t-2 shadow-sm py-3 ">
+    <div className="bg-white md:hidden flex items-center fixed bottom-0 justify-evenly w-screen border-t-2 shadow-sm py-3 ">
         <div className="relative h-6 w-6 bottomBtn">
           <HomeIcon />
         </div>
