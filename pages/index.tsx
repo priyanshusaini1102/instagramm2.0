@@ -7,7 +7,7 @@ import Feed from  '../components/Feed';
 
 const Home: NextPage = () => {
   return (
-    <div className=" bg-gray-50 min-h-screen pt-24 md:pt-28">
+    <div className=" bg-gray-50 min-h-screen py-24 md:py-28 ">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
