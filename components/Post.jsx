@@ -24,11 +24,11 @@ const Post = ({ id, username, userImg, img, caption }) => {
         <div className="flex items-center justify-between px-4 pt-4">
         {/* Buttons */}
             <div className="flex item-center space-x-4">
-            <HeartIcon className="h-7" />
-            <ChatIcon className="h-7" />
-            <PaperAirplaneIcon className="h-7" />
+            <HeartIcon className="h-6 md:h-7" />
+            <ChatIcon className="h-6 md:h-7" />
+            <PaperAirplaneIcon className="h-6 md:h-7" />
             </div>
-            <BookmarkIcon className="h-7" />        
+            <BookmarkIcon className="h-6 md:h-7" />        
         </div>
         <div className="px-4 py-3">
         {/* caption */}
@@ -44,7 +44,7 @@ const Post = ({ id, username, userImg, img, caption }) => {
         <div className="flex items-center p-4 border-t border-gray-300">
         {/* input box */}
             <EmojiHappyIcon className="h-8" />
-            <input type="text" placeholder="Write a comment! " className="flex-1 px-4" />
+            <input type="text" placeholder="Add a comment..." className="flex-1 px-4 focus:outline-none" />
             <input type="button" className="text-blue-200 font-bold text-lg" value="Post" />
 
 

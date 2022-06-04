@@ -2,7 +2,7 @@ import React from 'react'
 
 const Suggestions = () => {
   return (
-    <div className="my-4 border bg-white text-center p-2">
+    <div className="my-4 border p-2">
       Suggestions
     </div>
   )
