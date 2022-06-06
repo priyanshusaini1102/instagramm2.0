@@ -8,7 +8,9 @@
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "faker": "^5.5.3",
+    "firebase": "^9.8.2",
     "next": "latest",
+    "next-auth": "^4.3.4",
     "react": "18.1.0",
     "react-dom": "18.1.0"
   },

@@ -18,7 +18,7 @@ const Suggestions = () => {
   }, []);
 
   return (
-    <div className="my-4 p-2 sticky top-48">
+    <div className="my-4 p-2 sticky top-52">
       <div className="flex text-sm items-center justify-between" >
         <h3 className=" text-gray-400 ">Suggestions for you</h3>
         <button className="font-semibold">See All</button>

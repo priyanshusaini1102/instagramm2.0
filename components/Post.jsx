@@ -26,7 +26,7 @@ const Post = ({ id, username, userImg, img, caption }) => {
             <div className="flex item-center space-x-4">
             <HeartIcon className="h-6 md:h-7" />
             <ChatIcon className="h-6 md:h-7" />
-            <PaperAirplaneIcon className="h-6 md:h-7" />
+            <PaperAirplaneIcon className="relative h-6 md:h-7 rotate-45 -inset-y-0.5 inset-x-0.5" />
             </div>
             <BookmarkIcon className="h-6 md:h-7" />        
         </div>
