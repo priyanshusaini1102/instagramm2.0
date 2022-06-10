@@ -11,20 +11,25 @@ import {
 
 import { HomeIcon } from '@heroicons/react/solid';
 import { signIn,signOut,useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import {modalState} from '../atoms/modalAtom';
 
 const Header = () => {
 
   const { data : session } = useSession();
+  const [open, setOpen] = useRecoilState(modalState);
+  const router = useRouter();
   
   return (
-    <div className="bg-white w-screen shadow-sm fixed top-0">
+    <div className="bg-white w-screen shadow-sm fixed top-0 z-50">
       <div className="relative bg-white py-3 w-screen mx-auto flex px-6 justify-between max-w-6xl">
       {/* Left */}
       <div>
-        <div className="relative hidden lg:inline-grid w-28 h-10  cursor-pointer ">
+        <div className="relative hidden lg:inline-grid w-28 h-10  cursor-pointer " onClick={()=>router.push("/")}>
           <Image layout="fill" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2880px-Instagram_logo.svg.png" />
         </div>
-        <div className="relative lg:hidden w-10 h-10 cursor-pointer">
+        <div className="relative lg:hidden w-10 h-10 cursor-pointer" onClick={()=>router.push("/")}>
           <Image layout="fill" src="https://links.papareact.com/jjm" />
         </div>
       </div>
@@ -51,7 +56,7 @@ const Header = () => {
               <PaperAirplaneIcon className="rotate-45 " />
               <div className="absolute -top-1 text-xs -right-0.5 text-white bg-red-500 w-4 h-4 text-center rounded-full">3</div>
             </div>
-            <div className="relative h-6 w-6 navBtn">
+            <div className="relative h-6 w-6 navBtn" onClick={()=>setOpen(true)}>
               <PlusIcon  />
             </div>
             <div className="relative h-6 w-6 navBtn">
@@ -75,8 +80,6 @@ const Header = () => {
           
         </div>
         
-
-      
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Header from '../components/Header';
 import BottomBar from '../components/BottomBar';
 import Feed from  '../components/Feed';
+import Modal from '../components/Modal';
 import { useSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
@@ -11,11 +12,12 @@ const Home: NextPage = () => {
   const { data: session } = useSession();
 
   return (
-    <div className=" bg-gray-50 min-h-screen pb-10 pt-24 md:pt-28 ">
+    <div className=" bg-gray-50 min-h-screen pb-10 pt-24 md:pt-28">
       <Head>
         <title>Instagramm2-0</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Modal />
       {/* Header  */}
       <Header />
           <>
