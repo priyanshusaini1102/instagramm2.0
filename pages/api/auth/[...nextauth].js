@@ -14,6 +14,7 @@ export default NextAuth({
   pages: {
       signIn: "/auth/signin",
   },
+  secret: "strongsecret",
   callbacks: {
     async session({ session, token, user }) {
       session.user.username = session.user.email.split("@")[0].toLocaleLowerCase();

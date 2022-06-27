@@ -4,7 +4,6 @@ import Header from "../../components/Header";
 export default function SignIn({ providers }) {
   return (
     <>
-    <Header />
     <div className="w-screen h-screen flex items-center justify-center">
       {Object.values(providers).map((provider) => (
         <div key={provider.name}>

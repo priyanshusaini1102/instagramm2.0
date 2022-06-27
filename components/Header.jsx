@@ -9,11 +9,13 @@ import {
   MenuIcon
 } from '@heroicons/react/outline';
 
+import Router from 'next/router';
 import { HomeIcon } from '@heroicons/react/solid';
 import { signIn,signOut,useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import {modalState} from '../atoms/modalAtom';
+
 
 const Header = () => {
 
@@ -22,7 +24,7 @@ const Header = () => {
   const router = useRouter();
   
   return (
-    <div className="bg-white w-screen shadow-sm fixed top-0 z-50">
+    <div className="sticky bg-white w-screen shadow-sm mb-4 top-0 z-50">
       <div className="relative bg-white py-3 w-screen mx-auto flex px-6 justify-between max-w-6xl">
       {/* Left */}
       <div>
@@ -49,17 +51,17 @@ const Header = () => {
             <div className="md:hidden relative h-6 w-6">
               <MenuIcon />
             </div>
-            <div className="relative h-6 w-6 navBtn">
+            <div className="relative h-6 w-6 navBtn" onClick={()=>Router.push('/')}>
               <HomeIcon />
             </div>
-            <div className="relative h-6 w-6 -inset-y-0.5 navBtn">
+            <div className="relative h-6 w-6 -inset-y-0.5 navBtn" onClick={()=>Router.push('/direct')}>
               <PaperAirplaneIcon className="rotate-45 " />
               <div className="absolute -top-1 text-xs -right-0.5 text-white bg-red-500 w-4 h-4 text-center rounded-full">3</div>
             </div>
             <div className="relative h-6 w-6 navBtn" onClick={()=>setOpen(true)}>
               <PlusIcon  />
             </div>
-            <div className="relative h-6 w-6 navBtn">
+            <div className="relative h-6 w-6 navBtn" onClick={()=>Router.push('/explore')}>
               <Image layout="fill" src="/compass.png" />
             </div>
             <div className="relative h-6 w-6 navBtn">
@@ -67,7 +69,7 @@ const Header = () => {
             </div>
             <div className="relative navBtn">
               <div onClick={signOut} className="relative rounded-full object-cover h-8 w-8 -inset-y-0.5">
-                <img src={session.user.image} alt="" />
+                <img src={session.user.image} alt="" className="rounded-full object-cover h-8 w-8" />
               </div>
             </div>
             </>
