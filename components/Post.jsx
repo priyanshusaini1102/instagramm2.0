@@ -103,7 +103,7 @@ const Post = ({ id, username, userImg, img, caption }) => {
             {comments.length==0 && "Be the first person to comment!❤️‍🔥"}
             <button className="hover:text-black" onClick={()=>commentBox ? setCommentBox(false) : setCommentBox(true)}>View {commentBox ? "Less" :"All"}</button>
         </div>
-        <div className={`px-6 py-2 mb-0 ${commentBox ? "h-full" : "max-h-20"}  shadow-inner scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-50 overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full`}>
+        {comments.length>0 && <div className={`px-6 py-2 mb-0 ${commentBox ? "h-full" : "max-h-20"}  shadow-inner scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-50 overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full`}>
             {comments.map((i)=>(
             <div key={i.id} className="flex items-center text-sm justify-between m-1">
                 <div className="flex items-center space-x-2">
@@ -117,7 +117,7 @@ const Post = ({ id, username, userImg, img, caption }) => {
                 </div>
             </div>
             ))}
-            </div>
+            </div>}
         </div>}
         {session && <form onSubmit={sendComment} className="flex items-center p-4 border-t border-gray-300">
         {/* input box */}

@@ -1,6 +1,6 @@
 import { SearchIcon, PencilAltIcon } from '@heroicons/react/outline';
 import { Avatar } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 // import styled from 'styled-components';
 import ProfileCard from './ProfileCard';
 import { useRecoilState } from 'recoil';
@@ -9,6 +9,7 @@ import ChatModal from './ChatModal';
 
 const Sidebar = () => {
     const [open, setOpen] = useRecoilState(newChatModalState);
+    const [chats, setChats] = useState([]);
   return (
         <div className="border-r border-gray-300 w-80 h-full flex-1 ">
             <div className="">

@@ -1,24 +1,37 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,addDoc, query, where } from "firebase/firestore";
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XIcon  } from '@heroicons/react/outline';
+import { XIcon, LightningBoltIcon  } from '@heroicons/react/outline';
 import { useRecoilState } from 'recoil';
 import { newChatModalState } from '../atoms/modalAtom';
 import { db, storage } from '../firebase';
 import { useSession } from 'next-auth/react';
 import { Avatar } from '@mui/material'
 import { useRouter } from 'next/router';
+import * as EmailValidator from 'email-validator';
+import { async } from "@firebase/util";
+ 
+// EmailValidator.validate("test@email.com"); // true
   
 export default function ChatModal() {
-    const router = useRouter();
+  const router = useRouter();
   const [open, setOpen] = useRecoilState(newChatModalState);
   const {data : session} = useSession();
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState("");
+
+  const emailRef = useRef();
+
+
+
+
+  
+
     useEffect(()=>{
         
         (async () => {
             const querySnapshot = await getDocs(collection(db, "users"));
-            const querySnapshots = querySnapshot.docs.filter(doc => doc.data().email != session?.user?.email);
+            const querySnapshots = await querySnapshot.docs.filter(doc => doc.data().email != session?.user?.email);
             setUsers(querySnapshots);
           })();
     },[db,session]);
@@ -26,6 +39,32 @@ export default function ChatModal() {
     useEffect(()=>{
         setOpen(false);
     },[]);
+
+
+    const newChat = async() =>{
+      const value = emailRef?.current?.value;
+      const isUser = await users.find(user => user.data().email === value);
+      const isAlreadyExist = await chatAlreadyExists(value);
+      if(EmailValidator.validate(value) && isUser  && isAlreadyExist===false){
+        setOpen(false);
+        await addDoc(collection(db, 'chats'), {
+          users: [session?.user?.email, value],
+        });
+        // router.push(`/direct/${isUser.id}`)
+      }
+      else
+      setError(`Invalid email address or User not found`);
+      
+    }
+
+    const chatAlreadyExists = async(recipientEmail) => {
+      const userChatRef = collection(db, "chats");
+      const q = query(userChatRef, where("users", "array-contains", session?.user?.email));
+      const chatSnapshot = await getDocs(q);
+      chatSnapshot.docs.forEach(doc => console.log(doc.data().users[0]));
+      
+      return !!chatSnapshot?.docs.find(chat=>chat.data().users.find(user=> user === recipientEmail)?.length>0);
+    }
 
     
   return (
@@ -63,9 +102,13 @@ export default function ChatModal() {
                   </div>
                   <div className="flex  items-center border-b">
                     <p className="font-bold whitespace-nowrap">To :</p>
-                    <input type="text" placeholder="Search..." name="" id="" className="w-full h-full p-4 focus:outline-none" />
+                    <form onSubmit={(e) =>e.preventDefault()} className="w-full flex justify-between">
+                      <input ref={emailRef} onChange={() =>setError('')}type="text" placeholder="Search..." name="" id="" className="w-full h-full p-4 focus:outline-none" />
+                      <button type="submit" className="" onClick={newChat}><LightningBoltIcon className="h-6 w-6 hover:fill-black hover:scale-110 mr-4" /></button>
+                    </form>
                    
                   </div>
+                    {error && <p className="text-xs text-red-500">{error}</p> }
                   <div className="p-2">
                     <h2 className="font-semibold p-2">Suggested</h2>
                     {users.map(user => (
@@ -74,7 +117,6 @@ export default function ChatModal() {
                                 <p>{user?.data().name}</p>
                         </div>
                     ))}
-                   
                   </div>
                 </div>
               </Dialog.Panel>

@@ -4,7 +4,6 @@ import Sidebar from '../components/Sidebar';
 import ChatScreen from '../components/ChatScreen';
 import { useSession } from 'next-auth/react';
 import { db } from '../firebase';
-import { useRecoilState } from 'recoil';
 
 const Direct = () => {
 
@@ -19,7 +18,8 @@ const Direct = () => {
           email: session?.user?.email,
           lastSeen: serverTimestamp(),
           photoURL: session?.user?.image,
-          name:session?.user?.name
+          name:session?.user?.name,
+          username:session?.user?.username
         },{merge:true});
       })();
     }
