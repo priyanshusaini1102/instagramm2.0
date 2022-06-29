@@ -3,7 +3,7 @@ import { PaperAirplaneIcon, EmojiHappyIcon, PhotographIcon, HeartIcon } from '@h
 
 const ChatScreen = () => {
 
-  const [notSelected, setNotSelected] = useState(false);
+  const [notSelected, setNotSelected] = useState(true);
 
   return (
     <>

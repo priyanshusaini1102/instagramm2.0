@@ -1,12 +1,32 @@
 import { Avatar } from '@mui/material'
-import React from 'react'
+import React,{useState, useEffect} from 'react';
+import {useSession} from 'next-auth/react';
+import getRecipientEmail from '../utils/getRecipientEmail';
+import { db, storage } from '../firebase';
+import { collection, getDocs,addDoc, query, where } from "firebase/firestore";
 
-const ProfileCard = () => {
+const ProfileCard = ({users}) => {
+  const {data:session} = useSession();
+  const recipientEmail = getRecipientEmail(users,session.user);
+  const [recipient,setRecipient] = useState(null);
+
+  useEffect(()=>{
+    if(session){
+        (async() => {
+            const userChatRef = collection(db, "users");
+            const q = query(userChatRef, where("email", "==", recipientEmail));
+            const chatSnapshot = await getDocs(q);
+            setRecipient(chatSnapshot.docs[0]);
+        })(); 
+    }
+  },[db]);
+
+  
   return (
     <div className="p-4 flex items-center space-x-2 hover:bg-gray-50 cursor-pointer">
-        <Avatar sx={{ width: 56, height: 56 }} src="https://images.pexels.com/photos/6962024/pexels-photo-6962024.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" />
+        <Avatar sx={{ width: 56, height: 56 }} src={recipient?.data().photoURL} alt="" />
         <div>
-            <h2>Priyanshu Saini</h2>
+            <h2>{recipient?.data().name}</h2>
             <div className="flex text-gray-400 text-sm"> <p className="w-44 truncate">lastbkjb messaguyyvue😀😀😀</p>| <span>1h</span> </div>
         </div>
     </div>
