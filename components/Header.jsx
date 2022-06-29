@@ -48,8 +48,9 @@ const Header = () => {
         <div className="flex items-center justify-between md:w-64">
           {session ? (
             <>
-            <div className="md:hidden relative h-6 w-6">
-              <MenuIcon />
+            <div className="md:hidden relative h-6 w-6 cursor-pointer" onClick={()=> router.push('/direct')} >
+              <PaperAirplaneIcon className="rotate-45 " />
+              <div className="absolute -top-1 text-xs -right-0.5 text-white bg-red-500 w-4 h-4 text-center rounded-full">3</div>
             </div>
             <div className="relative h-6 w-6 navBtn" onClick={()=>Router.push('/')}>
               <HomeIcon />

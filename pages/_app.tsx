@@ -10,8 +10,6 @@ function MyApp({
 }: AppProps) {
 
  
-  
-
   return (
     <SessionProvider session={session}>
       <RecoilRoot>

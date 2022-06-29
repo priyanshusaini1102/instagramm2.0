@@ -15,16 +15,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      {/* Header  */}
-          <>
           {/* Feed */}
           <Feed />
-
-          {/* Modal */}
-
-          {/* Bottom Bar */}
-          <BottomBar />
-          </>
       
 
     </div>
