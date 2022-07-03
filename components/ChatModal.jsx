@@ -21,11 +21,8 @@ export default function ChatModal() {
   const [error, setError] = useState("");
 
   const emailRef = useRef();
+  const [mail,setMail] = useState("");
 
-
-
-
-  
 
     useEffect(()=>{
         
@@ -40,9 +37,17 @@ export default function ChatModal() {
         setOpen(false);
     },[]);
 
+    const newChatByMail = (email) => {
+      setMail(email);
+      console.log(mail);
+      
+      newChat();
+    }
 
     const newChat = async() =>{
-      const value = emailRef?.current?.value;
+      const value = mail || emailRef?.current?.value;
+      console.log(value);
+      
       const isUser = await users.find(user => user.data().email === value);
       const isAlreadyExist = await chatAlreadyExists(value);
       if(EmailValidator.validate(value) && isUser  && isAlreadyExist===false){
@@ -50,18 +55,19 @@ export default function ChatModal() {
         await addDoc(collection(db, 'chats'), {
           users: [session?.user?.email, value],
         });
+        mail = undefined;
         // router.push(`/direct/${isUser.id}`)
       }
       else
       setError(`Invalid email address or User not found`);
-      
+
+
     }
 
     const chatAlreadyExists = async(recipientEmail) => {
       const userChatRef = collection(db, "chats");
       const q = query(userChatRef, where("users", "array-contains", session?.user?.email));
       const chatSnapshot = await getDocs(q);
-      chatSnapshot.docs.forEach(doc => console.log(doc.data().users[0]));
       
       return !!chatSnapshot?.docs.find(chat=>chat.data().users.find(user=> user === recipientEmail)?.length>0);
     }
@@ -112,7 +118,7 @@ export default function ChatModal() {
                   <div className="p-2">
                     <h2 className="font-semibold p-2">Suggested</h2>
                     {users.map(user => (
-                        <div className="flex items-center space-x-3 hover:bg-gray-50 py-2 cursor-pointer" onClick={()=>router.push(`/direct/${user.id}`)}>
+                        <div className="flex items-center space-x-3 hover:bg-gray-50 py-2 cursor-pointer"  onClick={()=>newChatByMail(user?.data()?.email)}>
                                 <Avatar sx={{ width: 44, height: 44 }} src={user?.data().photoURL} alt="" />
                                 <p>{user?.data().name}</p>
                         </div>

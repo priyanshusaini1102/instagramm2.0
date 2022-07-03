@@ -1,18 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PaperAirplaneIcon, EmojiHappyIcon, PhotographIcon, HeartIcon } from '@heroicons/react/outline';
+import getRecipientEmail from '../utils/getRecipientEmail';
+import { db, storage } from '../firebase';
+import { collection, getDocs,addDoc, query, where } from "firebase/firestore";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
-const ChatScreen = ({isID}) => {
-
-  const notSelected = true ;
+const ChatScreen = (props) => {
+  const {data:session} = useSession();
+  const [newMsg,setNewMsg] = useState(true); 
+  
+  const [chat, setChat] = useState(null);
+  const router = useRouter();
+  
+  const recipientEmail = getRecipientEmail(chat?.data().users,session?.user);
+  
+  
+  useEffect(()=>{
+    
+    
+    if(session && router.query.id){
+      setNewMsg(false);
+        (async() => {
+            const userChatRef = collection(db, "chats");
+            const chatSnapshot = await getDocs(userChatRef);
+            const chats = chatSnapshot.docs.find(doc => doc.id == router.query.id);
+            setChat(chats);
+        })(); 
+    }
+  },[db,session,router.query]);
+  
 
   return (
     <>
-      {notSelected ? (<div className="h-full w-full p-2 flex flex-col space-y-3 items-center justify-center">
+      {newMsg ? (<div className="h-full w-full border p-2 flex flex-col space-y-3 items-center justify-center">
         <div className="border-2 border-black rounded-full p-4  ">
           <PaperAirplaneIcon className="h-8 w-8 md:h-24 md:w-24 rotate-45 -inset-y-1 inset-x-0.5 relative" />
         </div>
         <div className="text-center">
-          <h3 className="font-light text-2xl">Your Messages</h3>
+          <h3 className="font-light text-2xl">Your Messages {newMsg}</h3>
           <p className="text-gray-500 text-sm">Send private photos and messages to a friend or group.</p>
         </div>
         <div>
@@ -23,7 +49,7 @@ const ChatScreen = ({isID}) => {
           <div className="p-3 border-b w-full flex items-center space-x-4">
             <img className="h-12 w-12 rounded-full object-cover" src="https://images.pexels.com/photos/6962024/pexels-photo-6962024.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" />
             <div className="flex flex-col">
-              <h2 className="text-lg font-semibold">Priyanshu Saini</h2>
+              <h2 className="text-lg font-semibold">{recipientEmail}</h2>
               <p className="text-xs text-gray-500 font-semibold">Active 32m ago</p>
             </div>
           </div>
