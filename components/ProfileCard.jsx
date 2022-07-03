@@ -7,7 +7,7 @@ import { collection, getDocs,addDoc, query, where } from "firebase/firestore";
 
 const ProfileCard = ({users}) => {
   const {data:session} = useSession();
-  const recipientEmail = getRecipientEmail(users,session.user);
+  const recipientEmail = getRecipientEmail(users,session?.user);
   const [recipient,setRecipient] = useState(null);
 
   useEffect(()=>{

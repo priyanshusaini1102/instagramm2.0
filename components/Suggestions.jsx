@@ -31,7 +31,7 @@ const Suggestions = () => {
         
           <div className="flex-1 ml-2">
             <h2 className="font-semibold text-sm">{profile.data().name}</h2>
-            <h3 className="text-xs text-gray-400">{profile?.company?.name}</h3>
+            <h3 className="text-xs text-gray-400">{profile?.data()?.username}</h3>
           </div>
 
           <button className="text-blue-500 text-sm font-semibold">Follow</button>

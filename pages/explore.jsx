@@ -20,12 +20,12 @@ const explore = () => {
 
     return (
         <>
-        <div className="mt-4 min-h-screen max-w-6xl mx-auto">
+        <div className="mt-4 min-h-screen max-w-6xl mx-auto border px-auto">
 
-            <div className="flex flex-wrap justify-center md:justify-start space-y-4">
+            <div className="flex flex-wrap justify-start md:justify-start border w-fit">
                 {posts.map((post)=> (
-                    <div className="mx-2  object-cover">
-                        <img className="object-cover w-40 h-40 md:w-60 md:h-60 " src={post.data().image} />
+                    <div className="m-2 md:mx-2  object-cover">
+                        <img className="object-cover w-28 h-28 md:w-60 md:h-60 " src={post.data().image} />
                     </div>
                 ))}
             </div>
