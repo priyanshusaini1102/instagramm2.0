@@ -12,7 +12,6 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if(session){
-
       (async () => {
         await setDoc(doc(db, "users", session?.user?.uid), {
           email: session?.user?.email,

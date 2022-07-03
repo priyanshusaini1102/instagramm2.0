@@ -9,10 +9,11 @@ const Direct = () => {
 
   const { data:session } = useSession();
   
-
+  
   useEffect(() => {
+    console.log(session);
+    
     if(session){
-
       (async () => {
         await setDoc(doc(db, "users", session?.user?.uid), {
           email: session?.user?.email,
