@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import BottomBar from '../components/BottomBar';
 import Feed from  '../components/Feed';
 import { useSession } from 'next-auth/react';
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";

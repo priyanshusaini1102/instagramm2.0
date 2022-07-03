@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { doc, setDoc, serverTimestamp } from "firebase/firestore"; 
-import Sidebar from '../components/Sidebar';
-import ChatScreen from '../components/ChatScreen';
+import Sidebar from '../../components/Sidebar';
+import ChatScreen from '../../components/ChatScreen';
 import { useSession } from 'next-auth/react';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 
 const Direct = () => {
 
@@ -29,8 +29,9 @@ const Direct = () => {
   return (
     <div className="bg-gray-50 h-screen" >
         <div className="sticky top-20 bg-white h-5/6 flex max-w-6xl w-full mx-auto my-4 border border-gray-200 rounded-lg">
+            
             <Sidebar />
-            <ChatScreen />
+            <ChatScreen isID={true} />
         </div>
     </div>
   )

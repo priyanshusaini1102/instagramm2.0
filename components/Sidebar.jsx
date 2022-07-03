@@ -9,9 +9,11 @@ import ChatModal from './ChatModal';
 import { db, storage } from '../firebase';
 import { collection, getDocs,addDoc, query, where } from "firebase/firestore";
 import { useSession } from 'next-auth/react';
+import {useRouter} from 'next/router';
 
 
 const Sidebar = () => {
+    const router = useRouter();
     const {data : session} = useSession();
     const [open, setOpen] = useRecoilState(newChatModalState);
     const [chats, setChats] = useState([]);
@@ -41,7 +43,7 @@ const Sidebar = () => {
                 </div>
             </div>
             <div className="" >
-                {chats && chats.map((chat)=><ProfileCard users={chat.data().users} />)}
+                {chats && chats.map((chat)=><div onClick={()=>router.push(`/direct/${chat.id}`)}><ProfileCard users={chat.data().users}  /></div>)}
                 
             </div>
             <ChatModal />

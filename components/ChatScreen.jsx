@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { PaperAirplaneIcon, EmojiHappyIcon, PhotographIcon, HeartIcon } from '@heroicons/react/outline';
 
-const ChatScreen = () => {
+const ChatScreen = ({isID}) => {
 
-  const [notSelected, setNotSelected] = useState(true);
+  const notSelected = true ;
 
   return (
     <>
