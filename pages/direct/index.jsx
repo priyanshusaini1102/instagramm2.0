@@ -9,20 +9,20 @@ const Direct = () => {
 
   const { data:session } = useSession();
   
-  // useEffect(() => {
-  //   if(session){
-  //     (async () => {
-  //       await setDoc(doc(db, "users", session?.user?.uid), {
-  //         email: session?.user?.email,
-  //         lastSeen: serverTimestamp(),
-  //         photoURL: session?.user?.image,
-  //         name:session?.user?.name,
-  //         username:session?.user?.username
-  //       },{merge:true});
-  //     })();
-  //   }
+  useEffect(() => {
+    if(session){
+      (async () => {
+        await setDoc(doc(db, "users", session?.user?.uid), {
+          email: session?.user?.email,
+          lastSeen: serverTimestamp(),
+          photoURL: session?.user?.image,
+          name:session?.user?.name,
+          username:session?.user?.username
+        },{merge:true});
+      })();
+    }
     
-  // },[session]);
+  },[session]);
 
   return (
     <div className="bg-gray-50 h-screen" >
