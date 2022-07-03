@@ -5,6 +5,7 @@ import { db, storage } from '../firebase';
 import { collection, getDocs,addDoc, query, where } from "firebase/firestore";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import lastSeenAgo from 'last-seen-ago';
 
 const ChatScreen = (props) => {
   const {data:session} = useSession();
@@ -12,13 +13,15 @@ const ChatScreen = (props) => {
   
   const [chat, setChat] = useState(null);
   const router = useRouter();
+  const [user, setUser] = useState(null);
   
   const recipientEmail = getRecipientEmail(chat?.data().users,session?.user);
+
   
+  const lastSeen = lastSeenAgo.getLastSeen(user?.data()?.lastSeen.seconds);
+ 
   
   useEffect(()=>{
-    
-    
     if(session && router.query.id){
       setNewMsg(false);
         (async() => {
@@ -29,6 +32,19 @@ const ChatScreen = (props) => {
         })(); 
     }
   },[db,session,router.query]);
+
+  useEffect(()=>{
+    if(session && recipientEmail){
+      setNewMsg(false);
+        (async() => {
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, where("email", "==", recipientEmail));
+            const chatSnapshot = await getDocs(q);
+            const chats = chatSnapshot.docs;
+            setUser(chats[0]);
+        })(); 
+    }
+  },[recipientEmail]);
   
 
   return (
@@ -47,10 +63,10 @@ const ChatScreen = (props) => {
       </div>) : (
         <div className="h-full w-full flex flex-col space-y-3 items-center justify-start">
           <div className="p-3 border-b w-full flex items-center space-x-4">
-            <img className="h-12 w-12 rounded-full object-cover" src="https://images.pexels.com/photos/6962024/pexels-photo-6962024.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" />
+            <img className="h-12 w-12 rounded-full object-cover" src={user?.data()?.photoURL} alt="" />
             <div className="flex flex-col">
-              <h2 className="text-lg font-semibold">{recipientEmail}</h2>
-              <p className="text-xs text-gray-500 font-semibold">Active 32m ago</p>
+              <h2 className="text-lg font-semibold">{user?.data()?.email}</h2>
+              <p className="text-xs text-gray-500 font-semibold">Active {lastSeen}</p>
             </div>
           </div>
           <div className="flex-grow flex items-center">

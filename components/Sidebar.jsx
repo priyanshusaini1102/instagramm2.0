@@ -43,7 +43,7 @@ const Sidebar = () => {
                 </div>
             </div>
             <div className="" >
-                {chats && chats.map((chat)=><div onClick={()=>router.push(`/direct/${chat.id}`)}><ProfileCard users={chat.data().users}  /></div>)}
+                {chats && chats.map((chat)=><div onClick={()=>router.replace(`/direct/${chat.id}`)}><ProfileCard users={chat.data().users}  /></div>)}
                 
             </div>
             <ChatModal />

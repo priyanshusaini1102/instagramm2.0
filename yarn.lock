@@ -1601,6 +1601,11 @@
     "readable-stream" "~2.3.6"
     "setimmediate" "^1.0.5"
 
+"last-seen-ago@^1.1.0":
+  "integrity" "sha512-4nZMd4xtlMkQ8RybiplSswTbjsrHXW4LwQnR28Wx3hfZP6ZeRypPrNqisuhUXgGuf+KQ9H6BGHAq2ca0tV0BWQ=="
+  "resolved" "https://registry.npmjs.org/last-seen-ago/-/last-seen-ago-1.1.0.tgz"
+  "version" "1.1.0"
+
 "lie@~3.3.0":
   "integrity" "sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ=="
   "resolved" "https://registry.npmjs.org/lie/-/lie-3.3.0.tgz"
