@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
-import { doc, setDoc, serverTimestamp } from "firebase/firestore"; 
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import ChatScreen from '../../components/ChatScreen';
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { db } from '../../firebase';
 import DirectPage from '../../components/DirectPage';
-import {useRouter} from 'next/router';
+import getRecipientEmail from '../../utils/getRecipientEmail';
+import { db, storage } from '../../firebase';
+import { doc, setDoc, serverTimestamp, collection, getDocs, orderBy,getDoc,addDoc, query, where } from "firebase/firestore";
+import lastSeenAgo from 'last-seen-ago';
 
-const Direct = () => {
+const Direct = ({chat, messages}) => {
 
   const { data:session } = useSession();
   const router = useRouter();
@@ -31,9 +33,40 @@ const Direct = () => {
 
   return (
     <div className="bg-gray-50 h-screen" >
-        <DirectPage/>
+        <DirectPage chat={chat} messages={messages} />
     </div>
   )
 }
 
-export default Direct
+export default Direct;
+
+export async function getServerSideProps(context){
+  
+  const userChatRef = doc(db, "chats",`${context.query.id[0]}` );
+  //prep the messages
+  const messagesRef = collection(userChatRef, "messages");
+  const q = query(messagesRef, orderBy("timestamp", "asc"));
+  const messageSnapshot = await getDocs(q);
+  const messages = messageSnapshot.docs.map((doc)=>({
+    id:doc.id,
+    ...doc.data(),
+  })).map(messages=>({
+    ...messages,
+    timestamp: messages.timestamp.toDate().getTime(),
+  }));
+  //prep the chats
+  const chatRef = await getDoc(userChatRef);
+  const chat = {
+    id:chatRef.id,
+    ...chatRef.data(),
+  }
+  
+  console.log({chat,messages});
+  return {
+    props: {
+      messages: JSON.stringify(messages),
+      chat:chat
+    }
+  }
+      
+}

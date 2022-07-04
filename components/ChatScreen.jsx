@@ -2,36 +2,36 @@ import React, { useEffect, useState } from 'react';
 import { PaperAirplaneIcon, EmojiHappyIcon, PhotographIcon, HeartIcon } from '@heroicons/react/outline';
 import getRecipientEmail from '../utils/getRecipientEmail';
 import { db, storage } from '../firebase';
-import { collection, getDocs,addDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy,getDoc,doc,addDoc, query, where } from "firebase/firestore";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import lastSeenAgo from 'last-seen-ago';
+import { useRecoilState } from 'recoil';
+import {newChatModalState} from '../atoms/modalAtom';
 
-const ChatScreen = (props) => {
+
+const ChatScreen = ({ chat, messages }) => {
   const {data:session} = useSession();
-  const [newMsg,setNewMsg] = useState(true); 
-  
-  const [chat, setChat] = useState(null);
   const router = useRouter();
+  
+  const [newMsg,setNewMsg] = useState(true); 
+  const [chatUser, setChatUser] = useState(null);
   const [user, setUser] = useState(null);
+  const [open, setOpen] = useRecoilState(newChatModalState);
   
-  const recipientEmail = getRecipientEmail(chat?.data().users,session?.user);
-
-  
+  const recipientEmail = getRecipientEmail(chat?.users,session?.user);
   const lastSeen = lastSeenAgo.getLastSeen(user?.data()?.lastSeen.seconds);
- 
-  
-  useEffect(()=>{
-    if(session && router.query.id){
-      setNewMsg(false);
-        (async() => {
-            const userChatRef = collection(db, "chats");
-            const chatSnapshot = await getDocs(userChatRef);
-            const chats = chatSnapshot.docs.find(doc => doc.id == router.query.id);
-            setChat(chats);
-        })(); 
-    }
-  },[db,session,router.query]);
+
+  // useEffect(()=>{
+  //   if(session && router.query.id){
+  //     setNewMsg(false);
+  //       (async() => {
+  //           const userChatRef = doc(db, "chats",`${router.query.id[0]}` );
+  //           const chatSnapshot = await getDoc(userChatRef);
+  //           setChatUser(chatSnapshot);
+  //       })(); 
+  //   }
+  // },[db,session,router.query]);
 
   useEffect(()=>{
     if(session && recipientEmail){
@@ -45,7 +45,6 @@ const ChatScreen = (props) => {
         })(); 
     }
   },[recipientEmail]);
-  
 
   return (
     <>
@@ -58,7 +57,7 @@ const ChatScreen = (props) => {
           <p className="text-gray-500 text-sm">Send private photos and messages to a friend or group.</p>
         </div>
         <div>
-          <button className="bg-blue-500 font-semibold text-white py-1 px-2 rounded-md">Send Message</button>
+          <button className="bg-blue-500 font-semibold text-white py-1 px-2 rounded-md" onClick={()=>setOpen(true)}>Send Message</button>
         </div>
       </div>) : (
         <div className="h-full w-full flex flex-col space-y-3 items-center justify-start">
@@ -91,3 +90,4 @@ const ChatScreen = (props) => {
 }
 
 export default ChatScreen
+

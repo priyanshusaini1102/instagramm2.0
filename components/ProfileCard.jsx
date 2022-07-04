@@ -21,9 +21,10 @@ const ProfileCard = ({users}) => {
     }
   },[db]);
 
+
   
   return (
-    <div className="p-4 flex items-center space-x-2 hover:bg-gray-50 cursor-pointer">
+    <div className={`p-4 flex items-center space-x-2 hover:bg-gray-50 cursor-pointer`}>
         <Avatar sx={{ width: 56, height: 56 }} src={recipient?.data().photoURL} alt="" />
         <div>
             <h2>{recipient?.data().name}</h2>

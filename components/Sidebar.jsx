@@ -7,7 +7,7 @@ import { useRecoilState } from 'recoil';
 import {newChatModalState} from '../atoms/modalAtom';
 import ChatModal from './ChatModal';
 import { db, storage } from '../firebase';
-import { collection, getDocs,addDoc, query, where } from "firebase/firestore";
+import { collection,doc,getDoc, getDocs,addDoc, query, where } from "firebase/firestore";
 import { useSession } from 'next-auth/react';
 import {useRouter} from 'next/router';
 
@@ -31,6 +31,8 @@ const Sidebar = () => {
         }
     },[db,session]);
 
+   
+
   return (
         <div className="border-r border-gray-300 w-80 h-full flex-1 ">
             <div className="">
@@ -42,8 +44,8 @@ const Sidebar = () => {
                 </div>
                 </div>
             </div>
-            <div className="" >
-                {chats && chats.map((chat)=><div onClick={()=>router.replace(`/direct/${chat.id}`)}><ProfileCard users={chat.data().users}  /></div>)}
+            <div className=" overflow-y-auto" >
+                {chats && chats.map((chat)=><div onClick={()=>router.replace(`/direct/${chat.id}`)}><ProfileCard users={chat.data().users} /></div>)}
                 
             </div>
             <ChatModal />

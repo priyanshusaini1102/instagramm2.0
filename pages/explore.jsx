@@ -20,9 +20,9 @@ const explore = () => {
 
     return (
         <>
-        <div className="mt-4 min-h-screen max-w-6xl mx-auto border px-auto">
+        <div className="mt-4 min-h-screen max-w-6xl mx-auto  px-auto">
 
-            <div className="flex flex-wrap justify-start md:justify-start border w-fit">
+            <div className="flex flex-wrap justify-start md:justify-start  w-fit">
                 {posts.map((post)=> (
                     <div className="m-2 md:mx-2  object-cover">
                         <img className="object-cover w-28 h-28 md:w-60 md:h-60 " src={post.data().image} />

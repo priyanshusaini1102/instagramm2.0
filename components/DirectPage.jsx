@@ -5,7 +5,7 @@ import ChatScreen from './ChatScreen';
 import { useSession } from 'next-auth/react';
 import { db } from '../firebase';
 
-const DirectPage = (props) => {
+const DirectPage = ({ chat, messages }) => {
     const { data:session } = useSession();
     
 
@@ -29,7 +29,7 @@ const DirectPage = (props) => {
       <div className="bg-gray-50 h-screen" >
           <div className="sticky top-20 bg-white h-5/6 flex max-w-6xl w-full mx-auto my-4 border border-gray-200 rounded-lg">
               <Sidebar />
-              <ChatScreen />
+              <ChatScreen chat={chat} messages={messages} />
           </div>
       </div>
     )
