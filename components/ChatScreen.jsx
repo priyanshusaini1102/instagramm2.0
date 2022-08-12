@@ -1,93 +1,165 @@
-import React, { useEffect, useState } from 'react';
-import { PaperAirplaneIcon, EmojiHappyIcon, PhotographIcon, HeartIcon } from '@heroicons/react/outline';
-import getRecipientEmail from '../utils/getRecipientEmail';
-import { db, storage } from '../firebase';
-import { collection, getDocs, orderBy,getDoc,doc,addDoc, query, where } from "firebase/firestore";
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import lastSeenAgo from 'last-seen-ago';
-import { useRecoilState } from 'recoil';
-import {newChatModalState} from '../atoms/modalAtom';
-
+import React, { useEffect, useState } from 'react'
+import {
+  PaperAirplaneIcon,
+  EmojiHappyIcon,
+  PhotographIcon,
+  HeartIcon,
+} from '@heroicons/react/outline'
+import getRecipientEmail from '../utils/getRecipientEmail'
+import { db, storage } from '../firebase'
+import {
+  collection,
+  getDocs,
+  orderBy,
+  getDoc,
+  limit,
+  doc,
+  addDoc,
+  query,
+  where,
+  serverTimestamp,
+  onSnapshot,
+} from 'firebase/firestore'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import lastSeenAgo from 'last-seen-ago'
+import { useRecoilState } from 'recoil'
+import { newChatModalState } from '../atoms/modalAtom'
+import Message from './Message'
 
 const ChatScreen = ({ chat, messages }) => {
-  const {data:session} = useSession();
-  const router = useRouter();
-  
-  const [newMsg,setNewMsg] = useState(true); 
-  const [chatUser, setChatUser] = useState(null);
-  const [user, setUser] = useState(null);
-  const [open, setOpen] = useRecoilState(newChatModalState);
-  
-  const recipientEmail = getRecipientEmail(chat?.users,session?.user);
-  const lastSeen = lastSeenAgo.getLastSeen(user?.data()?.lastSeen.seconds);
+  const { data: session } = useSession()
+  const router = useRouter()
 
-  // useEffect(()=>{
-  //   if(session && router.query.id){
-  //     setNewMsg(false);
-  //       (async() => {
-  //           const userChatRef = doc(db, "chats",`${router.query.id[0]}` );
-  //           const chatSnapshot = await getDoc(userChatRef);
-  //           setChatUser(chatSnapshot);
-  //       })(); 
+  const [newMsg, setNewMsg] = useState(true)
+  const [user, setUser] = useState(null)
+  const [open, setOpen] = useRecoilState(newChatModalState)
+  const [latestMessage, setLatestMessage] = useState([]);
+  
+  const initialMsg = JSON.parse(messages ? messages : null)
+  const [messagesSnapshot, setMessagesSnapshot] = useState([]);
+  // const latestMessages = initialMsg;
+  
+
+  const [input, setInput] = useState('');
+
+  const recipientEmail = getRecipientEmail(chat?.users, session?.user);
+  const lastSeen = lastSeenAgo.getLastSeen(user?.data().lastSeen.seconds);
+
+  // const showMessages = () => {
+  //   if(messagesSnapshot) {
+  //     return messagesSnapshot.docs.map(msg => (
+  //       <Message
+  //         recipientEmail={recipientEmail}
+  //         senderEmail={msg?.data().user}
+  //         user={msg?.data().photoURL}
+  //         message={msg?.data().message}
+  //       />
+  //     ))
   //   }
-  // },[db,session,router.query]);
+  // }
 
-  useEffect(()=>{
-    if(session && recipientEmail){
-      setNewMsg(false);
-        (async() => {
-            const usersRef = collection(db, "users");
-            const q = query(usersRef, where("email", "==", recipientEmail));
-            const chatSnapshot = await getDocs(q);
-            const chats = chatSnapshot.docs;
-            setUser(chats[0]);
-        })(); 
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    const chatRef = doc(db, 'chats', chat.id);
+    const msgRef = await addDoc(collection(chatRef, 'messages'), {
+      timestamp: serverTimestamp(),
+      message: input,
+      user: session?.user?.email,
+      photoURL: session?.user?.image,
+    });
+
+    setInput('');
+  }
+
+  useEffect(() => {
+    if (session && recipientEmail) {
+      setNewMsg(false)
+      const chatsRef = doc(db, 'chats', chat?.id);
+      const messagesRef = collection(chatsRef, 'messages');
+      const qmsg = query(messagesRef, orderBy('timestamp'));
+      const unsubs = onSnapshot(
+        qmsg,
+        { includeMetadataChanges: false },
+        (ob) => {
+          const newMsgs = ob.docs.map((item) => ({
+              id: item.id,
+              timestamp: item.data().timestamp?.toDate().getTime(),
+              ...item.data()
+            })).map((message) => ({
+                  ...message,
+            }))
+            setMessagesSnapshot(newMsgs);
+        }
+      )
     }
-  },[recipientEmail]);
+  }, [onSnapshot,chat.id]);
+
+  useEffect(() => {
+    if (session && recipientEmail) {
+      setNewMsg(false)
+      ;(async () => {
+        const usersRef = collection(db, 'users')
+        const q = query(usersRef, where('email', '==', recipientEmail))
+        const chatSnapshot = await getDocs(q)
+        const chats = chatSnapshot.docs
+        setUser(chats[0])
+      })()
+    }
+  }, [chat?.id])
 
   return (
     <>
-      {newMsg ? (<div className="h-full w-full border p-2 flex flex-col space-y-3 items-center justify-center">
-        <div className="border-2 border-black rounded-full p-4  ">
-          <PaperAirplaneIcon className="h-8 w-8 md:h-24 md:w-24 rotate-45 -inset-y-1 inset-x-0.5 relative" />
-        </div>
-        <div className="text-center">
-          <h3 className="font-light text-2xl">Your Messages {newMsg}</h3>
-          <p className="text-gray-500 text-sm">Send private photos and messages to a friend or group.</p>
-        </div>
-        <div>
-          <button className="bg-blue-500 font-semibold text-white py-1 px-2 rounded-md" onClick={()=>setOpen(true)}>Send Message</button>
-        </div>
-      </div>) : (
-        <div className="h-full w-full flex flex-col space-y-3 items-center justify-start">
+      {
+        <div className="h-full w-full flex flex-col space-y-0 items-center justify-start">
           <div className="p-3 border-b w-full flex items-center space-x-4">
-            <img className="h-12 w-12 rounded-full object-cover" src={user?.data()?.photoURL} alt="" />
+            <img
+              className="h-12 w-12 rounded-full object-cover"
+              src={user?.data()?.photoURL}
+              alt=""
+            />
             <div className="flex flex-col">
-              <h2 className="text-lg font-semibold">{user?.data()?.email}</h2>
-              <p className="text-xs text-gray-500 font-semibold">Active {lastSeen}</p>
+              <h2 className="text-lg font-semibold">{recipientEmail}</h2>
+              <p className="text-xs text-gray-500 font-semibold capitalize">
+                Active {lastSeen}
+              </p>
             </div>
           </div>
-          <div className="flex-grow flex items-center">
-            Chatting
+          <div className="flex-grow w-full h-full flex hover:block flex-col justify-end px-2 overflow-y-auto">
+            {messagesSnapshot?.map((msg) => (
+              <Message
+                recipientEmail={recipientEmail}
+                senderEmail={msg?.user}
+                user={msg?.photoURL}
+                message={msg?.message}
+              />
+            ))}
           </div>
-          <div className=" w-full">
+          <div className="w-full">
             <div className="flex items-center space-x-3 border rounded-full  mx-4 mb-5 p-2 my-2">
-              <EmojiHappyIcon className="h-8 w-8"/>
+              <EmojiHappyIcon className="h-8 w-8" />
               <div className="flex-grow">
-                <form action="" onSubmit={(e) =>e.preventDefault()}>
-                  <input type="text" name="" id="" placeholder="Write your message...." className="w-full focus:outline-none mx-3"  />
+                <form action="" onSubmit={sendMessage}>
+                  <input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="Write your message...."
+                    className="w-full focus:outline-none mx-3"
+                  />
+                  <button hidden type="submit"></button>
                 </form>
               </div>
-              <PhotographIcon className="h-8 w-8" />
-              <HeartIcon className="w-8 h-8" />
+              <PhotographIcon className="h-8 w-8 hover:opacity-70" />
+              <HeartIcon className="w-8 h-8 hover:fill-red-600 hover:text-red-500" />
             </div>
           </div>
         </div>
-      )}
+      }
     </>
   )
 }
 
 export default ChatScreen
-

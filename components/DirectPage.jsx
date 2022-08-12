@@ -4,8 +4,9 @@ import Sidebar from './Sidebar';
 import ChatScreen from './ChatScreen';
 import { useSession } from 'next-auth/react';
 import { db } from '../firebase';
+import NewChatScreen from './NewChatScreen';
 
-const DirectPage = ({ chat, messages }) => {
+const DirectPage = ({ chat, messages, id }) => {
     const { data:session } = useSession();
     
 
@@ -27,9 +28,9 @@ const DirectPage = ({ chat, messages }) => {
   
     return (
       <div className="bg-gray-50 h-screen" >
-          <div className="sticky top-20 bg-white h-5/6 flex max-w-6xl w-full mx-auto my-4 border border-gray-200 rounded-lg">
-              <Sidebar />
-              <ChatScreen chat={chat} messages={messages} />
+          <div className="sticky top-20 bg-white h-5/6 mb-14  md:mb-4 flex max-w-6xl w-fit md:w-full z-0 mx-auto md:my-4 border border-gray-200 rounded-lg">
+              <Sidebar id={id} />
+              {id ?<ChatScreen chat={chat} messages={messages}/> :  <NewChatScreen /> }
           </div>
       </div>
     )

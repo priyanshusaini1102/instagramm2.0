@@ -12,7 +12,7 @@ import { useSession } from 'next-auth/react';
 import {useRouter} from 'next/router';
 
 
-const Sidebar = () => {
+const Sidebar = ({id}) => {
     const router = useRouter();
     const {data : session} = useSession();
     const [open, setOpen] = useRecoilState(newChatModalState);
@@ -34,7 +34,7 @@ const Sidebar = () => {
    
 
   return (
-        <div className="border-r border-gray-300 w-80 h-full flex-1 ">
+        <div className={`border-r border-gray-300 w-fit h-full md:flex-1 `+(`${id && ' hidden md:block '} `)}>
             <div className="">
                 <div className="relative flex justify-center space-x-3 items-center border-b py-5 border-gray-300 p-2 ">
                     <SearchIcon className="absolute left-6 z-10 h-6 w-6 mr-2"/>

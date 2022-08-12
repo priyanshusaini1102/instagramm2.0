@@ -9,7 +9,7 @@ import { db, storage } from '../../firebase';
 import { doc, setDoc, serverTimestamp, collection, getDocs, orderBy,getDoc,addDoc, query, where } from "firebase/firestore";
 import lastSeenAgo from 'last-seen-ago';
 
-const Direct = ({chat, messages}) => {
+const Direct = ({chat, messages,id}) => {
 
   const { data:session } = useSession();
   const router = useRouter();
@@ -33,7 +33,7 @@ const Direct = ({chat, messages}) => {
 
   return (
     <div className="bg-gray-50 h-screen" >
-        <DirectPage chat={chat} messages={messages} />
+        <DirectPage id={id} chat={chat} messages={messages} />
     </div>
   )
 }
@@ -61,11 +61,12 @@ export async function getServerSideProps(context){
     ...chatRef.data(),
   }
   
-  console.log({chat,messages});
+  // console.log({chat,messages});
   return {
     props: {
       messages: JSON.stringify(messages),
-      chat:chat
+      chat:chat,
+      id: context.query.id[0]
     }
   }
       

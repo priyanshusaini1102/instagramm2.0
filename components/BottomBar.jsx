@@ -22,7 +22,7 @@ const BottomBar = () => {
   const router = useRouter();
 
   return (
-    <div className="bg-white md:hidden flex items-center fixed bottom-0 justify-evenly w-screen border-t-2 shadow-sm py-3 ">
+    <div className="bg-white z-50 md:hidden flex items-center fixed bottom-0 justify-evenly w-screen border-t-2 shadow-sm py-3 ">
         <div className="relative h-6 w-6 bottomBtn" onClick={()=> router.push('/')} >
           <HomeIcon />
         </div>
