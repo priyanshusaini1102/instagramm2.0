@@ -30,7 +30,6 @@ export default function ChatModal() {
     useEffect(()=>{
       (async()=>{
         await newChat();
-        
       })();
     },[mail]);
 
@@ -47,34 +46,24 @@ export default function ChatModal() {
         setOpen(false);
     },[]);
 
-    const newChatByMail = async(email) => {
-      setMail(email);
-      await newChat();
-      setOpen(false);
-      router.push(`/direct/`);
-      setMail("");
-      
-    }
+    
 
     const newChat = async() =>{
       const value = mail || emailRef?.current?.value;
       if(!value){
-        value = mail;
-        // console.log(mail+email);
         return;
-        
       }
       console.log(value);
       
-      const isUser = await users.find(user => user.data().email === value);
+      const isUser = users.find(user => user.data().email === value);
       const isAlreadyExist = await chatAlreadyExists(value);
       if(EmailValidator.validate(value) && isUser  && isAlreadyExist===false){
-        setOpen(false);
         await addDoc(collection(db, 'chats'), {
           users: [session?.user?.email, value],
         });
         setMail(undefined);
-         
+        setOpen(false);
+        router.reload();
       }
       else
       setError(`Invalid email address or User not found`);

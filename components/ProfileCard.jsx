@@ -28,7 +28,7 @@ const ProfileCard = ({users}) => {
         <Avatar sx={{ width: 56, height: 56 }} src={recipient?.data().photoURL} alt="" />
         <div>
             <h2>{recipient?.data().name}</h2>
-            <div className="flex text-gray-400 text-sm"> <p className="w-44 truncate">lastbkjb messaguyyvue😀😀😀</p>| <span>1h</span> </div>
+            <div className="flex text-gray-400 text-sm"> <p className="w-44 truncate">{recipient?.data().username}</p></div>
         </div>
     </div>
   )

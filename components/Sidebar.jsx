@@ -28,10 +28,10 @@ const Sidebar = ({id}) => {
                 const chatSnapshot = await getDocs(q);
                 setChats(chatSnapshot.docs);
             })(); 
+
         }
     },[db,session]);
 
-   
 
   return (
         <div className={`border-r border-gray-300 w-fit h-full md:flex-1 `+(`${id && ' hidden md:block '} `)}>
@@ -45,7 +45,7 @@ const Sidebar = ({id}) => {
                 </div>
             </div>
             <div className=" overflow-y-auto" >
-                {chats && chats.map((chat)=><div onClick={()=>router.replace(`/direct/${chat.id}`)}><ProfileCard users={chat.data().users} /></div>)}
+                {chats && chats.map((chat)=><div onClick={()=>router.replace(`/direct/${chat?.id}`)}><ProfileCard users={chat?.data()?.users} /></div>)}
                 
             </div>
             <ChatModal />
@@ -54,17 +54,3 @@ const Sidebar = ({id}) => {
 };
 
 export default Sidebar;
-
-// const Container = styled.div``;
-
-// const Header = styled.div``;
-
-// const UserAvatar = styled(Avatar)``;
-
-// const Users = styled.div``;
-
-// const Search = styled.div``;
-
-// const SearchInput = styled.input`
-//     position: relative;
-// `;

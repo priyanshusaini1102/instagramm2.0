@@ -35,6 +35,7 @@ const ChatScreen = ({ chat, messages }) => {
   const [user, setUser] = useState(null)
   const [open, setOpen] = useRecoilState(newChatModalState)
   const [latestMessage, setLatestMessage] = useState([]);
+  const [allMsg, setAllMsg] = useState(false);
   
   const initialMsg = JSON.parse(messages ? messages : null)
   const [messagesSnapshot, setMessagesSnapshot] = useState([]);
@@ -61,13 +62,15 @@ const ChatScreen = ({ chat, messages }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    const chatRef = doc(db, 'chats', chat.id);
-    const msgRef = await addDoc(collection(chatRef, 'messages'), {
-      timestamp: serverTimestamp(),
-      message: input,
-      user: session?.user?.email,
-      photoURL: session?.user?.image,
-    });
+    if(input.trim().length > 0){
+      const chatRef = doc(db, 'chats', chat.id);
+      const msgRef = await addDoc(collection(chatRef, 'messages'), {
+        timestamp: serverTimestamp(),
+        message: input,
+        user: session?.user?.email,
+        photoURL: session?.user?.image,
+      });
+    }
 
     setInput('');
   }
@@ -125,7 +128,7 @@ const ChatScreen = ({ chat, messages }) => {
               </p>
             </div>
           </div>
-          <div className="flex-grow w-full h-full block  hover:flex flex-col justify-end px-2 overflow-y-auto ">
+          <div onDoubleClick={(e)=>setAllMsg(!allMsg)} className={(allMsg ? " block " : " flex ")+`flex-grow w-full h-full  flex-col justify-end px-2 overflow-y-auto`}>
           
             {messagesSnapshot?.map((msg) => (
               <Message
@@ -154,7 +157,7 @@ const ChatScreen = ({ chat, messages }) => {
                 </form>
               </div>
               <PhotographIcon className="h-8 w-8 hover:opacity-70" />
-              <HeartIcon className="w-8 h-8 hover:fill-red-600 hover:text-red-500" />
+              <HeartIcon onClick={(e)=>setInput('💝')} className="w-8 h-8 fill-red-600 cursor-pointer text-red-600" />
             </div>
           </div>
         </div>
