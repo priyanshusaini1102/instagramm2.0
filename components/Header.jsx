@@ -25,14 +25,14 @@ const Header = () => {
   
   return (
     <div className="sticky bg-white w-screen shadow-sm mb-4 top-0 z-50">
-      <div className="relative bg-white py-3 w-screen mx-auto flex px-6 justify-between max-w-6xl">
+      <div className="relative bg-white py-3 lg:py-2 w-screen mx-auto flex px-6 justify-between max-w-6xl">
       {/* Left */}
       <div>
-        <div className="relative hidden lg:inline-grid w-28 h-10  cursor-pointer " onClick={()=>router.push("/")}>
-          <Image layout="fill" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2880px-Instagram_logo.svg.png" />
+        <div className="relative hidden lg:inline-grid w-36 h-12  cursor-pointer " onClick={()=>router.push("/")}>
+          <Image className="w-full h-full" layout="fill" src="/desktop-logo-instagram.png" />
         </div>
         <div className="relative lg:hidden w-10 h-10 cursor-pointer" onClick={()=>router.push("/")}>
-          <Image layout="fill" src="https://links.papareact.com/jjm" />
+          <Image layout="fill" src="/logo-instagram.png" />
         </div>
       </div>
 

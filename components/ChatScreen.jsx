@@ -131,7 +131,7 @@ const ChatScreen = ({ chat, messages }) => {
               </p>
             </div>
           </div>
-          <div onDoubleClick={(e)=>setAllMsg(!allMsg)} className={(allMsg ? " block " : " flex ")+`flex-grow w-full h-full     justify-end px-2 overflow-y-auto`}>
+          <div onDoubleClick={(e)=>setAllMsg(!allMsg)} className={(allMsg ? " block " : " flex ")+`flex-grow w-full h-full flex-col  justify-end px-2 overflow-y-auto`}>
           
             {messagesSnapshot?.map((msg) => (
               <Message
