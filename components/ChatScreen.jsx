@@ -62,6 +62,7 @@ const ChatScreen = ({ chat, messages }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
+    
     if(input.trim().length > 0){
       const chatRef = doc(db, 'chats', chat.id);
       const msgRef = await addDoc(collection(chatRef, 'messages'), {
@@ -70,9 +71,11 @@ const ChatScreen = ({ chat, messages }) => {
         user: session?.user?.email,
         photoURL: session?.user?.image,
       });
+      setInput('');
+    }else{
+      setInput('');
     }
 
-    setInput('');
   }
 
   useEffect(() => {
@@ -128,7 +131,7 @@ const ChatScreen = ({ chat, messages }) => {
               </p>
             </div>
           </div>
-          <div onDoubleClick={(e)=>setAllMsg(!allMsg)} className={(allMsg ? " block " : " flex ")+`flex-grow w-full h-full  flex-col justify-end px-2 overflow-y-auto`}>
+          <div onDoubleClick={(e)=>setAllMsg(!allMsg)} className={(allMsg ? " block " : " flex ")+`flex-grow w-full h-full     justify-end px-2 overflow-y-auto`}>
           
             {messagesSnapshot?.map((msg) => (
               <Message
