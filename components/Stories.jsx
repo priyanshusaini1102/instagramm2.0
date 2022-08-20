@@ -19,7 +19,7 @@ const Stories = () => {
     },[db,session]);
 
   return (
-    <div className="border mx-5 bg-white rounded-lg shadow-inner p-2 flex flex-row overflow-y-scroll hideScroll">
+    <div className="border mx-5 bg-white rounded-lg shadow-inner p-2 flex flex-row pl-4 space-x-4 overflow-y-scroll  hideScroll">
 
       {session && (
         <Story img={session.user.image} username={session.user.username} />

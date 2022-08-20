@@ -23,6 +23,16 @@ export default function ChatModal() {
   const emailRef = useRef();
   const [mail,setMail] = useState("");
 
+    useEffect(()=>{
+      setError('');
+    },[]);
+
+    useEffect(()=>{
+      (async()=>{
+        await newChat();
+        
+      })();
+    },[mail]);
 
     useEffect(()=>{
         
@@ -37,15 +47,23 @@ export default function ChatModal() {
         setOpen(false);
     },[]);
 
-    const newChatByMail = (email) => {
+    const newChatByMail = async(email) => {
       setMail(email);
-      console.log(mail);
+      await newChat();
+      setOpen(false);
+      router.push(`/direct/`);
+      setMail("");
       
-      newChat();
     }
 
     const newChat = async() =>{
       const value = mail || emailRef?.current?.value;
+      if(!value){
+        value = mail;
+        // console.log(mail+email);
+        return;
+        
+      }
       console.log(value);
       
       const isUser = await users.find(user => user.data().email === value);
@@ -55,12 +73,11 @@ export default function ChatModal() {
         await addDoc(collection(db, 'chats'), {
           users: [session?.user?.email, value],
         });
-        mail = undefined;
-        // router.push(`/direct/${isUser.id}`)
+        setMail(undefined);
+         
       }
       else
       setError(`Invalid email address or User not found`);
-
 
     }
 
@@ -116,9 +133,9 @@ export default function ChatModal() {
                   </div>
                     {error && <p className="text-xs text-red-500">{error}</p> }
                   <div className="p-2">
-                    <h2 className="font-semibold p-2">Suggested</h2>
+                    <h2 className="font-semibold p-2">Suggested </h2>
                     {users.map(user => (
-                        <div className="flex items-center space-x-3 hover:bg-gray-50 py-2 cursor-pointer"  onClick={()=>newChatByMail(user?.data()?.email)}>
+                        <div className="flex items-center space-x-3 hover:bg-gray-50 py-2 cursor-pointer"  onClick={()=>setMail(user.data().email)}>
                                 <Avatar sx={{ width: 44, height: 44 }} src={user?.data().photoURL} alt="" />
                                 <p>{user?.data().name}</p>
                         </div>

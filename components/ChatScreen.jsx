@@ -125,7 +125,8 @@ const ChatScreen = ({ chat, messages }) => {
               </p>
             </div>
           </div>
-          <div className="flex-grow w-full h-full flex hover:block flex-col justify-end px-2 overflow-y-auto">
+          <div className="flex-grow w-full h-full block  hover:flex flex-col justify-end px-2 overflow-y-auto ">
+          
             {messagesSnapshot?.map((msg) => (
               <Message
                 recipientEmail={recipientEmail}

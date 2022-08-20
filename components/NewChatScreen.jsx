@@ -14,7 +14,7 @@ const NewChatScreen = () => {
     const [open, setOpen] = useRecoilState(newChatModalState);
   return (
     <>
-      <div className="h-full w-full border p-2 flex flex-col space-y-3 items-center justify-center">
+      <div className="h-full w-full border p-2 hidden md:flex flex-col space-y-3 items-center justify-center">
         <div className="border-2 border-black rounded-full p-4  ">
           <PaperAirplaneIcon className="h-8 w-8 md:h-24 md:w-24 rotate-45 -inset-y-1 inset-x-0.5 relative" />
         </div>
