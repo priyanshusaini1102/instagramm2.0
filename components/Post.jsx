@@ -89,7 +89,7 @@ const Post = ({ id, username, userImg, img, caption }) => {
             </div>
             <BookmarkIcon className="h-6 w-9  md:h-7 hover:fill-black" />        
         </div>}
-        <div className="px-4 mt-2 py-2">
+        <div className="px-4 mt-2 py-2 text-sm sm:text-base">
         {/* caption */}
             <p>
                 <span className="font-bold">{username} </span>
@@ -98,22 +98,22 @@ const Post = ({ id, username, userImg, img, caption }) => {
         </div>
         
         {/* comments */}
-        {comments && <div className="mt-2">
-        <div className="flex justify-between px-5 font-semibold text-gray-400">
+        {comments && <div className="mt-2 text-xs sm:text-sm md:text-md">
+        <div className="flex justify-between px-2 sm:px-5 font-semibold text-gray-400">
             <p>{comments.length} Comments</p>
             {comments.length==0 && "Be the first person to comment!❤️‍🔥"}
-            <button className="hover:text-black" onClick={()=>commentBox ? setCommentBox(false) : setCommentBox(true)}>View {commentBox ? "Less" :"All"}</button>
+            <button className="text-black" onClick={()=>commentBox ? setCommentBox(false) : setCommentBox(true)}>View {commentBox ? "Less" :"All"}</button>
         </div>
-        {comments.length>0 && <div className={`px-6 py-2 mb-0 ${commentBox ? "h-full" : "max-h-20"}  shadow-inner scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-50 overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full`}>
+        {comments.length>0 && <div className={`px-2 sm:px-6 py-2 mb-0 ${commentBox ? "h-full" : "max-h-20"}  shadow-inner scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-50 overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full`}>
             {comments.map((i)=>(
-            <div key={i.id} className="flex items-center text-sm justify-between m-1">
-                <div className="flex items-center space-x-2">
+            <div key={i.id} className="flex items-center  justify-between m-1">
+                <div className="flex items-center space-x-1 sm:space-x-2">
                 <img className="h-6 w-6 rounded-full" src={i.data().userImage} alt="" />
-                <span className="font-bold">{i.data().username} </span>
-                <span className="font-sans">{i.data().comment}</span> 
+                <span className="text-xs sm:text-sm font-bold">{i.data().username} <span className="font-sans font-normal">{i.data().comment}</span> </span>
+                 
                 </div>
                 <div className="flex items-center space-x-3">
-                <Moment className="text-xs capitalize font-semibold text-gray-400" fromNow>{i.data().timestamp?.toDate()}</Moment>
+                <Moment className="hidden sm:flex capitalize font-extralight sm:font-semibold text-gray-400" fromNow>{i.data().timestamp?.toDate()}</Moment>
                 <HeartIcon className="h-5 hover:fill-red-500 hover:text-red-500" />
                 </div>
             </div>
