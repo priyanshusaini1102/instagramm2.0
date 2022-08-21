@@ -1,7 +1,7 @@
 import React,{ useEffect, useState } from 'react';
 
 import { db, storage } from '../firebase';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit } from "firebase/firestore";
 import { useSession } from 'next-auth/react';
 
 const Suggestions = () => {
@@ -11,6 +11,7 @@ const Suggestions = () => {
     useEffect(()=>{
         (async () => {
             let querySnapshot = await getDocs(collection(db, "users"));
+            // const q = query(citiesRef, orderBy("name"), );
             const querySnapshots = querySnapshot.docs.filter(doc => doc.data().email != session.user.email);
             setSuggestions(querySnapshots);
           })();
@@ -19,7 +20,7 @@ const Suggestions = () => {
   
 
   return (
-    <div className="my-4 p-2 sticky top-52">
+    <div className="my-4 p-2 sticky top-52 h-72 overflow-hidden">
       <div className="flex text-sm items-center justify-between" >
         <h3 className=" text-gray-400 ">Suggestions for you</h3>
         <button className="font-semibold">See All</button>

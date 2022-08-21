@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from 'react';
 import { onSnapshot, query, collection, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
 import Header from '../components/Header';
+import Head from 'next/head';
 
 const explore = () => {
 
@@ -21,6 +22,10 @@ const explore = () => {
     return (
         <>
         <div className="mt-4 min-h-screen max-w-6xl mx-auto  px-auto">
+        <Head>
+          <title>Instagramm2-0</title>
+          {/* <link rel="icon" href="/favicon.ico" /> */}
+        </Head>
 
             <div className="flex flex-wrap justify-start md:justify-start  w-fit">
                 {posts.map((post)=> (

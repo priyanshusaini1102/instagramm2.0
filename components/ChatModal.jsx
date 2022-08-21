@@ -95,7 +95,7 @@ export default function ChatModal() {
         </Transition.Child>
 
         <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+          <div className="flex items-center justify-center min-h-full p-4 text-center sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -121,7 +121,7 @@ export default function ChatModal() {
                    
                   </div>
                     {error && <p className="text-xs text-red-500">{error}</p> }
-                  <div className="p-2">
+                  <div className="p-2 h-72 overflow-y-auto">
                     <h2 className="font-semibold p-2">Suggested </h2>
                     {users.map(user => (
                         <div className="flex items-center space-x-3 hover:bg-gray-50 py-2 cursor-pointer"  onClick={()=>setMail(user.data().email)}>

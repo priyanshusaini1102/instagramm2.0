@@ -14,7 +14,7 @@ const Feed = () => {
         {/* Section */}
         <section className="col-span-2">
             {/* Stories */}
-            <Stories /> 
+            {session ? <Stories /> : <p className="text-xs font-semibold text-center text-slate-400">Please Sign In with google to access more functionality. <br/>( Like, Comment, Post & Realtime Messaging )</p>  }
             {/* Posts */}
             <Posts />
         </section>

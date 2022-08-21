@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { db } from '../../firebase';
 import DirectLayout from '../../layouts/DirectLayout';
 import DirectPage from '../../components/DirectPage';
+import Head from 'next/head';
 
 const Direct = () => {
 
@@ -28,6 +29,10 @@ const Direct = () => {
 
   return (
     <div className="" >
+        <Head>
+          <title>Instagramm2-0</title>
+          {/* <link rel="icon" href="/favicon.ico" /> */}
+        </Head>
         <DirectPage/>
     </div>
   )

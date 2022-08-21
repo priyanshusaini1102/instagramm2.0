@@ -37,12 +37,12 @@ const Header = () => {
       </div>
 
       {/* Middle */}
-        <div className=" md:flex relative justify-center h-10 my-auto ">
+        {session && <div className=" md:flex relative justify-center h-10 my-auto ">
           <div className="absolute my-2 left-2 border-1 border-black ">
             <SearchIcon className="h-6 w-6 opacity-30" />
           </div>
             <input type="text" placeholder="Search" className="h-full border-2 pl-9 focus:border-black bg-gray-200 shadow-inner rounded-lg"/>
-        </div>
+        </div>}
 
       {/* Right */}
         <div className="flex items-center justify-between md:w-64">

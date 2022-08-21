@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Head from 'next/head';
 import {
   PaperAirplaneIcon,
   EmojiHappyIcon,
@@ -64,14 +65,15 @@ const ChatScreen = ({ chat, messages }) => {
     e.preventDefault();
     
     if(input.trim().length > 0){
+      const value = input;
+      setInput('');
       const chatRef = doc(db, 'chats', chat.id);
       const msgRef = await addDoc(collection(chatRef, 'messages'), {
         timestamp: serverTimestamp(),
-        message: input,
+        message: value,
         user: session?.user?.email,
         photoURL: session?.user?.image,
       });
-      setInput('');
     }else{
       setInput('');
     }
@@ -116,6 +118,10 @@ const ChatScreen = ({ chat, messages }) => {
 
   return (
     <>
+    <Head>
+          <title>Instagramm2-0</title>
+          {/* <link rel="icon" href="/favicon.ico" /> */}
+    </Head>
       {
         <div className="h-full w-full flex flex-col space-y-0 items-center justify-start">
           <div className="p-3 border-b w-full flex items-center space-x-4">
