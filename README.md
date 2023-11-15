@@ -1,23 +1,37 @@
-# Next.js + Tailwind CSS Example
+# Instagram Clone Project
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+![Project Image](https://drive.google.com/uc?id=17buIBOBQFS4bZnO31EWGZhZT24YRtWLH)
 
-## Deploy your own
+## Table of Contents
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+- [Description](#description)
+- [Features](#features)
+- [Demo](#demo)
+- [Technologies](#technologies)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Description
 
-## How to use
+This project is an Instagram clone built with Next.js, Firebase, and Tailwind CSS. It aims to replicate the core functionality and design of Instagram, allowing users to sign in, upload photos, like and comment on posts, and follow other users.
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+## Features
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-# or
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
-```
+- User authentication (Sign Up, Sign In, Sign Out)
+- Post creation and uploading images
+- Like and comment on posts
+- Real-time Messaging using Firebase
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## Demo
+
+[Link to live demo](https://instagramm2-0.vercel.app/)
+#### Post Component
+![Post Image](https://drive.google.com/uc?id=1mX1LcLIGgViRkVJO1rSTtlLEZbvgIkAj)
+#### Realtime Messaging
+![Messaging Image](https://drive.google.com/uc?id=1Zy5gDbIygTOPhMJlokRibEhH94_W2JLt)
+
+
+## Technologies
+
+- [Next.js](https://nextjs.org/)
+- [Firebase](https://firebase.google.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vercel](https://vercel.com/)
